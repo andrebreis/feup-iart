@@ -9,15 +9,18 @@ public class Book {
     private String title;
     private double length, height;
     private String author;
-    private Date publicationDate;
+    private int publicationYear;
     ArrayList<String> genres;
 
-    public Book(String title, double length, double height, String author, Date publicationDate, ArrayList<String> genres) {
+    public Book(String title, double length, double height, String author, int publicationYear) {
         this.title = title;
         this.length = length;
         this.height = height;
         this.author = author;
-        this.publicationDate = publicationDate;
+        this.publicationYear = publicationYear;
+    }
+
+    public void setGenres(ArrayList<String> genres) {
         this.genres = genres;
     }
 
@@ -29,8 +32,8 @@ public class Book {
         return author;
     }
 
-    public Date getPublicationDate() {
-        return publicationDate;
+    public int getPublicationYear() {
+        return publicationYear;
     }
 
     public ArrayList<String> getGenres() {
@@ -39,6 +42,18 @@ public class Book {
 
     public double getLength() {
         return length;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", length=" + length +
+                ", height=" + height +
+                ", author='" + author + '\'' +
+                ", publicationYear=" + publicationYear +
+                ", genres=" + genres +
+                '}';
     }
 
     public double getHeight() {
