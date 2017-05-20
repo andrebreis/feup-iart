@@ -10,7 +10,7 @@ public class Book {
     private double length, height;
     private String author;
     private int publicationYear;
-    ArrayList<String> genres;
+    private ArrayList<String> genres;
 
     public Book(String title, double length, double height, String author, int publicationYear) {
         this.title = title;
@@ -44,15 +44,25 @@ public class Book {
         return length;
     }
 
+//    @Override
+//    public String toString() {
+//        return "Book{" +
+//                "title=" + title +
+//                ", length=" + length +
+//                ", height=" + height +
+//                ", author='" + author +
+//                ", publicationYear=" + publicationYear +
+//                ", genres=" + genres +
+//                '}';
+//    }
+
+
     @Override
     public String toString() {
         return "Book{" +
-                "title='" + title + '\'' +
-                ", length=" + length +
-                ", height=" + height +
-                ", author='" + author + '\'' +
+                "title=" + title +
+                ", author=" + author +
                 ", publicationYear=" + publicationYear +
-                ", genres=" + genres +
                 '}';
     }
 
