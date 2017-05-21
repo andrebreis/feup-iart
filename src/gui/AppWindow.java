@@ -16,7 +16,7 @@ public class AppWindow extends JDialog{
     private JSlider time_exec;
     private JSlider num_iter;
     private JCheckBox enableCheckBox;
-    private JCheckBox enableCheckBox1;
+    private JCheckBox enableCheckBox2;
     private JTextArea console;
     private JTextField book_dataset;
     private JTextField shelves_dataset;

@@ -180,14 +180,16 @@
               <grid row="5" column="17" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <selected value="true"/>
               <text value="enable"/>
             </properties>
           </component>
-          <component id="7e9aa" class="javax.swing.JCheckBox" binding="enableCheckBox1" default-binding="true">
+          <component id="7e9aa" class="javax.swing.JCheckBox" binding="enableCheckBox2" default-binding="true">
             <constraints>
               <grid row="6" column="17" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <selected value="true"/>
               <text value="enable"/>
             </properties>
           </component>
