@@ -1,25 +1,28 @@
 package gui;
 
+import logic.Population;
+
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class AppWindow extends JDialog{
     private JPanel contentPane;
-    private JButton buttonOK;
-    private JButton buttonCancel;
     private JPanel label_numiter;
-    private JButton OKButton;
-    private JButton cancelButton;
+    private JButton runButton;
+    private JButton closeButton;
     private JSlider crossover;
     private JSlider mutation;
     private JSlider elitism;
     private JSlider time_exec;
     private JSlider num_iter;
-    private JCheckBox enableCheckBox;
-    private JCheckBox enableCheckBox2;
+    private JCheckBox iterEnd;
+    private JCheckBox timeEnd;
     private JTextArea console;
     private JTextField book_dataset;
     private JTextField shelves_dataset;
+
+    private Population pop;
 
 
     public AppWindow() {
@@ -28,26 +31,18 @@ public class AppWindow extends JDialog{
 
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
+        getRootPane().setDefaultButton(runButton);
 
-
-
-        elitism.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                super.keyTyped(e);
-            }
-        });
 
         //buttons
 
-        OKButton.addActionListener(new ActionListener() {
+        runButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onOK();
+                run();
             }
         });
 
-        cancelButton.addActionListener(new ActionListener() {
+        closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }
@@ -77,11 +72,24 @@ public class AppWindow extends JDialog{
             }
         });
 
+//        contentPane.add(new JScrollPane(console));
+        MessageConsole mc = new MessageConsole(console);
+        mc.redirectOut();
+        mc.redirectErr(Color.RED, null);
+        mc.setMessageLines(100);
+
     }
 
-    private void onOK() {
+    private void run() {
         // add your code here
-        dispose();
+        pop = new Population();
+
+        Population.setAlgorithmParameters(elitism.getValue(), 200, num_iter.getValue(),
+                (double) mutation.getValue() / 100.0, (double) crossover.getValue() / 100.0,
+                iterEnd.isSelected(), timeEnd.isSelected());
+
+        pop.initiatePopulation(book_dataset.getText(), shelves_dataset.getText());
+        new Thread(() -> pop.evolve()).start();
     }
 
     private void onCancel() {
