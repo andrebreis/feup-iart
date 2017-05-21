@@ -21,6 +21,9 @@ public class AppWindow extends JDialog{
     private JTextArea console;
     private JTextField book_dataset;
     private JTextField shelves_dataset;
+    private JButton advancedSettingsButton;
+    private JTabbedPane tabbedPane1;
+    private JSlider slider1;
 
     private Population pop;
 
