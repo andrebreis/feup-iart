@@ -24,13 +24,15 @@ public class Population
     public Population(String booksFilename, ArrayList<Point2D.Double> shelves) {
 
         this.books = parseBooks(booksFilename);
+        Individual.setBooks(this.books);
         this.shelves = shelves;
+        Individual.setShelves(this.shelves);
 
         m_population = new Individual[POP_SIZE];
 
         // init population
         for (int i = 0; i < POP_SIZE; i++) {
-            m_population[i] = new Individual(this.books.size());
+            m_population[i] = new Individual();
             m_population[i].randGenes();
         }
 
@@ -102,7 +104,7 @@ public class Population
     public double evaluate() {
         this.totalFitness = 0.0;
         for (int i = 0; i < POP_SIZE; i++) {
-            this.totalFitness += m_population[i].evaluate(this.books, this.shelves);
+            this.totalFitness += m_population[i].evaluate();
         }
         return this.totalFitness;
     }
@@ -144,8 +146,8 @@ public class Population
 
     public Individual[] crossover(Individual indiv1,Individual indiv2) {
         Individual[] newIndiv = new Individual[2];
-        newIndiv[0] = new Individual(this.books.size());
-        newIndiv[1] = new Individual(this.books.size());
+        newIndiv[0] = new Individual();
+        newIndiv[1] = new Individual();
 
         int randPoint = m_rand.nextInt(this.books.size());
         randPoint = randPoint * newIndiv[0].getBitsPerBook(); //assures that the crossover point doesnt break a book number
@@ -224,6 +226,7 @@ public class Population
 
         // best indiv
         Individual bestIndiv = pop.findBestIndividual();
+        System.out.println(bestIndiv);
 
     }
 }

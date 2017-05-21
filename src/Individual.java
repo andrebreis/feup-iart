@@ -1,23 +1,25 @@
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class Individual
 {
     private int size;
-    private int[] genes; //TODO: BOOLEAN[] ?
+    private int[] genes;
     private int bitsPerBook;
     private int noBooks;
     private double fitnessValue;
+
+    private static ArrayList<Book> books;
+    private static ArrayList<Point2D.Double> shelves;
 
     private int neededBits(int x)
     {
         return (int) Math.floor(Math.log(x) / Math.log(2)) + 1;
     }
 
-    public Individual(int noBooks) {
-        this.noBooks = noBooks;
+    public Individual() {
+        this.noBooks = books.size();
         this.bitsPerBook = neededBits(noBooks);
         this.size = bitsPerBook*noBooks;
         genes = new int[this.size];
@@ -31,8 +33,12 @@ public class Individual
         return fitnessValue;
     }
 
-    public void setFitnessValue(int fitnessValue) {
-        this.fitnessValue = fitnessValue;
+    public static void setBooks(ArrayList<Book> books) {
+        Individual.books = books;
+    }
+
+    public static void setShelves(ArrayList<Point2D.Double> shelves) {
+        Individual.shelves = shelves;
     }
 
     public int getGene(int index) {
@@ -52,9 +58,6 @@ public class Individual
         int currentBit = 0;
         while (!nrs.isEmpty()) {
             int randomPick = rand.nextInt(nrs.size());
-//            System.out.print(randomPick);
-//            int randomPick = 0;
-//            System.out.print(" ");
             currentNr = Integer.toBinaryString(randomPick);
             while(currentNr.length() != bitsPerBook)
                 currentNr = "0" + currentNr;
@@ -64,7 +67,6 @@ public class Individual
             }
             nrs.remove(randomPick);
         }
-//        System.out.println(Arrays.toString(genes));
     }
 
     public void mutate() {
@@ -80,13 +82,13 @@ public class Individual
         return Integer.parseInt(bookGenes, 2);
     }
 
-    private ArrayList<Book> getShelfBooks(int shelfNumber, ArrayList<Point2D.Double> shelves, int firstBook, ArrayList<Book> books) {
+    private ArrayList<Book> getShelfBooks(int shelfNumber, int firstBook, ArrayList<Book> tmpBooks) {
         double accumulatedLength = 0;
         ArrayList<Book> shelfBooks = new ArrayList<>();
         int bookIndex = getNthBookIndex(firstBook);
-        while((accumulatedLength += books.get(bookIndex).getLength()) < shelves.get(shelfNumber).x) {
-            shelfBooks.add(books.get(bookIndex));
-            books.remove(bookIndex);
+        while((accumulatedLength += tmpBooks.get(bookIndex).getLength()) < shelves.get(shelfNumber).x) {
+            shelfBooks.add(tmpBooks.get(bookIndex));
+            tmpBooks.remove(bookIndex);
             firstBook++;
             if(firstBook >= noBooks)
                 break;
@@ -103,9 +105,9 @@ public class Individual
         return false;
     }
 
-    private boolean booksAreDateSorted(ArrayList<Book> books) {
-        for (int i = 0; i < books.size() - 1; i++) {
-            if(!(books.get(i).getPublicationYear() < books.get(i+1).getPublicationYear()))
+    private boolean booksAreDateSorted(ArrayList<Book> booksToCheck) {
+        for (int i = 0; i < booksToCheck.size() - 1; i++) {
+            if(!(booksToCheck.get(i).getPublicationYear() < booksToCheck.get(i+1).getPublicationYear()))
                 return false;
         }
         return true;
@@ -174,7 +176,7 @@ public class Individual
         return filledSpaceRatio - authorPen - datePen - heightPen - genrePen;
     }
 
-    public double evaluate(ArrayList<Book> books, ArrayList<Point2D.Double> shelves) {
+    public double evaluate() {
         double fitness = 0;
 
         int currentBook = 0;
@@ -184,7 +186,7 @@ public class Individual
 
         while(currentBook != this.noBooks) {
             try {
-                ArrayList<Book> shelfBooks = getShelfBooks(currentShelf, shelves, currentBook, tmpBooks);
+                ArrayList<Book> shelfBooks = getShelfBooks(currentShelf, currentBook, tmpBooks);
                 fitness += evaluateShelf(shelfBooks, shelves.get(currentShelf));
                 currentBook += shelfBooks.size();
                 currentShelf++;
@@ -202,5 +204,35 @@ public class Individual
 
     public int getBitsPerBook() {
         return bitsPerBook;
+    }
+
+    @Override
+    public String toString() {
+        String str = "Individual: ";
+        for (int gene:
+             genes) {
+            str += gene;
+        }
+        str += "\nShelf1: ";
+
+        double accumulatedLength = 0;
+        int currentShelf = 0;
+
+        ArrayList<Book> tmpBooks = new ArrayList<>(books);
+        for (int i = 0; i <  noBooks; i++){
+            int index = getNthBookIndex(i);
+            Book b = tmpBooks.get(index);
+            tmpBooks.remove(index);
+            accumulatedLength += b.getLength();
+            if(accumulatedLength > shelves.get(currentShelf).getX()){
+                currentShelf++;
+                accumulatedLength = b.getLength();
+                str += "\nShelf " + (currentShelf+1) + ": ";
+            }
+            else if (i != 0)
+                str += ", ";
+            str += b;
+        }
+        return str;
     }
 }
