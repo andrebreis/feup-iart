@@ -33,7 +33,7 @@ public class AppWindow extends JDialog{
 
 
         setContentPane(contentPane);
-        setModal(true);
+//        setModal(true);
         getRootPane().setDefaultButton(runButton);
 
 
@@ -81,6 +81,15 @@ public class AppWindow extends JDialog{
         mc.redirectErr(Color.RED, null);
         mc.setMessageLines(100);
 
+        advancedSettingsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+//                contentPane.setVisible(false);
+                new PenaltiesWindow().setVisible(true);
+//                frame.add(panel);
+            }
+        });
     }
 
     private void run() {
@@ -104,7 +113,7 @@ public class AppWindow extends JDialog{
         AppWindow dialog = new AppWindow();
         dialog.pack();
         dialog.setVisible(true);
-        System.exit(0);
+//        System.exit(0);
     }
 
     private void createUIComponents() {

@@ -117,7 +117,7 @@
               <text value="Number of maximum errors:"/>
             </properties>
           </component>
-          <component id="10e3c" class="javax.swing.JSlider" binding="slider1" default-binding="true">
+          <component id="10e3c" class="javax.swing.JSlider" binding="authorPen">
             <constraints>
               <grid row="5" column="2" row-span="1" col-span="5" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <minimum-size width="-1" height="40"/>
@@ -137,7 +137,7 @@
               <JSlider.isFilled class="java.lang.Boolean" value="true"/>
             </clientProperties>
           </component>
-          <component id="e775b" class="javax.swing.JSlider" binding="slider2" default-binding="true">
+          <component id="e775b" class="javax.swing.JSlider" binding="genrePen">
             <constraints>
               <grid row="6" column="2" row-span="1" col-span="5" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -150,7 +150,7 @@
               <value value="20"/>
             </properties>
           </component>
-          <component id="3c285" class="javax.swing.JSlider" binding="slider3" default-binding="true">
+          <component id="3c285" class="javax.swing.JSlider" binding="datePen">
             <constraints>
               <grid row="7" column="2" row-span="1" col-span="5" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -163,7 +163,7 @@
               <value value="20"/>
             </properties>
           </component>
-          <component id="aef91" class="javax.swing.JSlider" binding="slider4" default-binding="true">
+          <component id="aef91" class="javax.swing.JSlider" binding="heightPen">
             <constraints>
               <grid row="8" column="2" row-span="1" col-span="5" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -175,7 +175,7 @@
               <value value="25"/>
             </properties>
           </component>
-          <component id="1d858" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+          <component id="1d858" class="javax.swing.JTextField" binding="maxNumPens">
             <constraints>
               <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <minimum-size width="40" height="30"/>

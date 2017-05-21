@@ -231,21 +231,6 @@
               <text value="Run"/>
             </properties>
           </component>
-          <component id="bcf88" class="javax.swing.JTextArea" binding="console">
-            <constraints>
-              <grid row="15" column="1" row-span="11" col-span="18" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="100" height="50"/>
-              </grid>
-            </constraints>
-            <properties>
-              <background color="-16118771"/>
-              <caretColor color="-1025"/>
-              <foreground color="-1025"/>
-              <selectedTextColor color="-1025"/>
-              <selectionColor color="-1025"/>
-              <text value=""/>
-            </properties>
-          </component>
           <component id="847c5" class="javax.swing.JTextField" binding="book_dataset">
             <constraints>
               <grid row="12" column="2" row-span="1" col-span="15" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
@@ -327,6 +312,26 @@
               <snapToTicks value="true"/>
             </properties>
           </component>
+          <scrollpane id="b27b2">
+            <constraints>
+              <grid row="15" column="1" row-span="11" col-span="18" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="bcf88" class="javax.swing.JTextArea" binding="console">
+                <constraints/>
+                <properties>
+                  <background color="-16118771"/>
+                  <caretColor color="-1025"/>
+                  <foreground color="-1025"/>
+                  <selectedTextColor color="-1025"/>
+                  <selectionColor color="-1025"/>
+                  <text value=""/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
         </children>
       </grid>
     </children>

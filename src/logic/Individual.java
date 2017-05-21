@@ -1,6 +1,7 @@
 package logic;
 
 import java.awt.geom.Point2D;
+import java.net.DatagramPacket;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -15,9 +16,24 @@ public class Individual
     private static ArrayList<Book> books;
     private static ArrayList<Point2D.Double> shelves;
 
+    private static int MAX_NUM_PENS = 5;
+    private static double AUTHOR_PEN_VALUE = 0.2;
+    private static double DATE_PEN_VALUE = 0.2;
+    private static double HEIGHT_PEN_VALUE = 0.2;
+    private static double GENRE_PEN_VALUE = 0.1;
+
+
     private int neededBits(int x)
     {
         return (int) Math.floor(Math.log(x) / Math.log(2)) + 1;
+    }
+
+    public static void changePenaltiesValues (int maxNumPens, double authorPenValue, double datePenValue, double heightPenValue, double genrePenValue){
+        MAX_NUM_PENS = maxNumPens;
+        AUTHOR_PEN_VALUE = authorPenValue;
+        DATE_PEN_VALUE = datePenValue;
+        HEIGHT_PEN_VALUE = heightPenValue;
+        GENRE_PEN_VALUE = genrePenValue;
     }
 
     public Individual() {
@@ -168,17 +184,17 @@ public class Individual
         }
 
         double filledSpaceRatio = totalBooksLength/shelfDimensions.x;
-        double authorPen = noAuthorPens > 5 ? 0.25*filledSpaceRatio : (double) noAuthorPens/20;
-        double datePen = noDatePens > 5 ? 0.15*filledSpaceRatio : (double) noDatePens/35;
-        double heightPen = noHeightPens > 5 ? 0.15*filledSpaceRatio : (double) noHeightPens/35;
-        double genrePen = noGenrePens > 5 ? 0.1*filledSpaceRatio : (double) noGenrePens/50;
+        double authorPen = noAuthorPens > MAX_NUM_PENS ? AUTHOR_PEN_VALUE*filledSpaceRatio : (double) noAuthorPens/(MAX_NUM_PENS/AUTHOR_PEN_VALUE);
+        double datePen = noDatePens > MAX_NUM_PENS ? DATE_PEN_VALUE*filledSpaceRatio : (double) noDatePens/(MAX_NUM_PENS/DATE_PEN_VALUE);
+        double heightPen = noHeightPens > MAX_NUM_PENS ? HEIGHT_PEN_VALUE*filledSpaceRatio : (double) noHeightPens/(MAX_NUM_PENS/HEIGHT_PEN_VALUE);
+        double genrePen = noGenrePens > MAX_NUM_PENS ? GENRE_PEN_VALUE*filledSpaceRatio : (double) noGenrePens/(MAX_NUM_PENS/GENRE_PEN_VALUE);
 
         return filledSpaceRatio - authorPen - datePen - heightPen - genrePen;
     }
 
     public double evaluate() {
         double fitness = 0;
-
+//maxnumpens/x = authorpenvalue, x = maxnumpens/authorpenvalue
         int currentBook = 0;
         int currentShelf = 0;
 
