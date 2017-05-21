@@ -3,54 +3,28 @@ package gui;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class AppWindow extends JDialog{
+public class PenaltiesWindow extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JPanel label_numiter;
-    private JButton OKButton;
-    private JButton cancelButton;
-    private JSlider crossover;
-    private JSlider mutation;
-    private JSlider elitism;
-    private JSlider time_exec;
-    private JSlider num_iter;
-    private JCheckBox enableCheckBox;
-    private JCheckBox enableCheckBox1;
-    private JTextArea console;
-    private JTextField book_dataset;
-    private JTextField shelves_dataset;
-    private JButton advancedSettingsButton;
-    private JTabbedPane tabbedPane1;
     private JSlider slider1;
+    private JSlider slider2;
+    private JSlider slider3;
+    private JSlider slider4;
+    private JTextField textField1;
 
-
-    public AppWindow() {
-
-
-
+    public PenaltiesWindow() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-
-
-        elitism.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                super.keyTyped(e);
-            }
-        });
-
-        //buttons
-
-        OKButton.addActionListener(new ActionListener() {
+        buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
             }
         });
 
-        cancelButton.addActionListener(new ActionListener() {
+        buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }
@@ -70,16 +44,6 @@ public class AppWindow extends JDialog{
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        time_exec.addMouseListener(new MouseAdapter() {
-        });
-        time_exec.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                super.keyTyped(e);
-
-            }
-        });
-
     }
 
     private void onOK() {
@@ -93,13 +57,9 @@ public class AppWindow extends JDialog{
     }
 
     public static void main(String[] args) {
-        AppWindow dialog = new AppWindow();
+        PenaltiesWindow dialog = new PenaltiesWindow();
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
-    }
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
     }
 }
