@@ -98,6 +98,10 @@
               <grid row="9" column="2" row-span="1" col-span="15" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <majorTickSpacing value="25"/>
+              <minorTickSpacing value="5"/>
+              <paintLabels value="true"/>
+              <paintTicks value="true"/>
               <value value="80"/>
             </properties>
           </component>
@@ -106,7 +110,11 @@
               <grid row="8" column="2" row-span="1" col-span="15" vsize-policy="0" hsize-policy="1" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <majorTickSpacing value="25"/>
               <maximum value="100"/>
+              <minorTickSpacing value="5"/>
+              <paintLabels value="true"/>
+              <paintTicks value="true"/>
               <value value="10"/>
               <valueIsAdjusting value="false"/>
             </properties>
@@ -126,8 +134,12 @@
               </grid>
             </constraints>
             <properties>
+              <majorTickSpacing value="2500"/>
               <maximum value="10000"/>
-              <minimum value="1000"/>
+              <minimum value="0"/>
+              <minorTickSpacing value="500"/>
+              <paintLabels value="true"/>
+              <paintTicks value="true"/>
               <value value="5000"/>
             </properties>
           </component>
@@ -136,7 +148,11 @@
               <grid row="7" column="2" row-span="1" col-span="15" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <majorTickSpacing value="10"/>
               <maximum value="50"/>
+              <minorTickSpacing value="5"/>
+              <paintLabels value="true"/>
+              <paintTicks value="true"/>
               <value value="5"/>
             </properties>
           </component>
@@ -145,10 +161,15 @@
               <grid row="5" column="2" row-span="1" col-span="15" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <majorTickSpacing value="500"/>
+              <majorTickSpacing value="1000"/>
               <maximum value="4000"/>
+              <minimum value="0"/>
+              <minorTickSpacing value="100"/>
+              <paintLabels value="true"/>
+              <paintTicks value="true"/>
+              <paintTrack value="true"/>
               <value value="2000"/>
-              <valueIsAdjusting value="false"/>
+              <valueIsAdjusting value="true"/>
             </properties>
           </component>
           <component id="fc8e3" class="javax.swing.JLabel">
