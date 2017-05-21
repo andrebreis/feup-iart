@@ -133,7 +133,7 @@ public class Individual
         int noGenrePens = 0;
 
         String currentAuthor=shelfBooks.get(0).getAuthor();
-        int noBooksCurrentAuthor = 0;
+//        int noBooksCurrentAuthor = 0;
         for (int i = 0; i < shelfBooks.size() - 1; i++) {
             Book currentBook = shelfBooks.get(i);
             Book nextBook = shelfBooks.get(i+1);
@@ -151,13 +151,12 @@ public class Individual
             if(currentBook.getHeight() > nextBook.getHeight()*1.2 || currentBook.getHeight() < nextBook.getHeight() * 0.8)
                 noHeightPens++;
 
-            if(i == shelfBooks.size() - 2 || !currentBook.getAuthor().equals(currentAuthor)) {
-                if(!booksAreDateSorted(new ArrayList<>(shelfBooks.subList(i-noBooksCurrentAuthor, i))))
+            if(nextBook.getAuthor().equals(currentAuthor)) {
+                if(!(nextBook.getPublicationYear() > currentBook.getPublicationYear()))
                     noDatePens++;
-                currentAuthor = currentBook.getAuthor();
-                noBooksCurrentAuthor = 1;
             }
-            else noBooksCurrentAuthor++;
+            else
+                currentAuthor = nextBook.getAuthor();
 
             if(!hasCommonGenre(currentBook.getGenres(), nextBook.getGenres()))
                 noGenrePens++;
@@ -245,7 +244,7 @@ public class Individual
         int noGenrePens = 0;
 
         String currentAuthor=shelfBooks.get(0).getAuthor();
-        int noBooksCurrentAuthor = 0;
+//        int noBooksCurrentAuthor = 0;
         for (int i = 0; i < shelfBooks.size() - 1; i++) {
             Book currentBook = shelfBooks.get(i);
             Book nextBook = shelfBooks.get(i+1);
@@ -261,16 +260,12 @@ public class Individual
             if(currentBook.getHeight() > nextBook.getHeight()*1.2 || currentBook.getHeight() < nextBook.getHeight() * 0.8)
                 noHeightPens++;
 
-            if(i == shelfBooks.size() - 2 || !currentBook.getAuthor().equals(currentAuthor)) {
-                System.out.println("Checking if books are date sorted...");
-                if(!booksAreDateSorted(new ArrayList<>(shelfBooks.subList(i-noBooksCurrentAuthor, i)))){
+            if(nextBook.getAuthor().equals(currentAuthor)) {
+                if(!(nextBook.getPublicationYear() > currentBook.getPublicationYear()))
                     noDatePens++;
-                    System.out.println("They arent!");
-                }
-                currentAuthor = currentBook.getAuthor();
-                noBooksCurrentAuthor = 1;
             }
-            else noBooksCurrentAuthor++;
+            else
+                currentAuthor = nextBook.getAuthor();
 
             if(!hasCommonGenre(currentBook.getGenres(), nextBook.getGenres()))
                 noGenrePens++;
