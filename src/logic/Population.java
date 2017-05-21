@@ -31,13 +31,14 @@ public class Population
     }
 
     public static void setAlgorithmParameters(int elitismK, int popSize, int maxIter,
-                                              double mutationRate, double crossoverRate,
+                                              double mutationRate, double crossoverRate, long duration,
                                               boolean iterEnd, boolean timeEnd) {
         Population.ELITISM_K = elitismK;
         Population.POP_SIZE = popSize + elitismK;
         Population.MAX_ITER = maxIter;
         Population.MUTATION_RATE = mutationRate;
         Population.CROSSOVER_RATE = crossoverRate;
+        Population.DURATION = duration;
 
         Population.ITER_END = iterEnd;
         Population.TIME_END = timeEnd;

@@ -134,13 +134,13 @@
               </grid>
             </constraints>
             <properties>
-              <majorTickSpacing value="2500"/>
-              <maximum value="10000"/>
+              <majorTickSpacing value="5000"/>
+              <maximum value="30000"/>
               <minimum value="0"/>
               <minorTickSpacing value="500"/>
               <paintLabels value="true"/>
               <paintTicks value="true"/>
-              <value value="5000"/>
+              <value value="10000"/>
             </properties>
           </component>
           <component id="b066d" class="javax.swing.JSlider" binding="elitism">

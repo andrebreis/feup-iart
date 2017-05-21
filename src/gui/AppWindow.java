@@ -101,7 +101,7 @@ public class AppWindow extends JDialog{
         pop = new Population();
 
         Population.setAlgorithmParameters(elitism.getValue(), populationSize.getValue(), num_iter.getValue(),
-                (double) mutation.getValue() / 100.0, (double) crossover.getValue() / 100.0,
+                (double) mutation.getValue() / 100.0, (double) crossover.getValue() / 100.0, time_exec.getValue(),
                 iterEnd.isSelected(), timeEnd.isSelected());
 
         pop.initiatePopulation(book_dataset.getText(), shelves_dataset.getText());
@@ -111,6 +111,7 @@ public class AppWindow extends JDialog{
     private void onCancel() {
         // add your code here if necessary
         dispose();
+        System.exit(0);
     }
 
     public static void main(String[] args) {
