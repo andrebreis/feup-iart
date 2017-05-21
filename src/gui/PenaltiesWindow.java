@@ -66,13 +66,13 @@ public class PenaltiesWindow extends JDialog {
         double genrePenValue = (double) genrePen.getValue()/ 100.0;
         double heightPenValue = (double) heightPen.getValue()/ 100.0;
 
-        if(authorPenValue + datePenValue + genrePenValue + heightPenValue >= 1) {
-            JOptionPane.showMessageDialog(null, "The Sum of all Penalization Values must be less than 100%!");
-        }
-        else{
+//        if(authorPenValue + datePenValue + genrePenValue + heightPenValue >= 1) {
+//            JOptionPane.showMessageDialog(null, "The Sum of all Penalization Values must be less than 100%!");
+//        }
+//        else{
             Individual.changePenaltiesValues(numPens, authorPenValue, datePenValue, heightPenValue, genrePenValue);
             dispose();
-        }
+//        }
 //        Individual.changePenaltiesValues();
 
     }

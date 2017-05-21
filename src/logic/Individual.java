@@ -189,7 +189,8 @@ public class Individual
         double heightPen = noHeightPens > MAX_NUM_PENS ? HEIGHT_PEN_VALUE*filledSpaceRatio : (double) noHeightPens/(MAX_NUM_PENS/HEIGHT_PEN_VALUE);
         double genrePen = noGenrePens > MAX_NUM_PENS ? GENRE_PEN_VALUE*filledSpaceRatio : (double) noGenrePens/(MAX_NUM_PENS/GENRE_PEN_VALUE);
 
-        return filledSpaceRatio - authorPen - datePen - heightPen - genrePen;
+        double fitness = filledSpaceRatio - authorPen - datePen - heightPen - genrePen;
+        return fitness > 0 ? fitness : 0;
     }
 
     public double evaluate() {
