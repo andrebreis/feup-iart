@@ -3,23 +3,51 @@ package gui;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class AppWindow extends JDialog {
+public class AppWindow extends JDialog{
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
+    private JPanel label_numiter;
+    private JButton OKButton;
+    private JButton cancelButton;
+    private JSlider crossover;
+    private JSlider mutation;
+    private JSlider elitism;
+    private JSlider time_exec;
+    private JSlider num_iter;
+    private JCheckBox enableCheckBox;
+    private JCheckBox enableCheckBox1;
+    private JTextArea console;
+    private JTextField book_dataset;
+    private JTextField shelves_dataset;
+
 
     public AppWindow() {
+
+
+
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        buttonOK.addActionListener(new ActionListener() {
+
+
+        elitism.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+            }
+        });
+
+        //buttons
+
+        OKButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
             }
         });
 
-        buttonCancel.addActionListener(new ActionListener() {
+        cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }
@@ -39,6 +67,16 @@ public class AppWindow extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        time_exec.addMouseListener(new MouseAdapter() {
+        });
+        time_exec.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+
+            }
+        });
+
     }
 
     private void onOK() {
@@ -56,5 +94,9 @@ public class AppWindow extends JDialog {
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }
