@@ -1,3 +1,5 @@
+package logic;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -46,7 +48,7 @@ public class Book {
 
 //    @Override
 //    public String toString() {
-//        return "Book{" +
+//        return "logic.Book{" +
 //                "title=" + title +
 //                ", length=" + length +
 //                ", height=" + height +

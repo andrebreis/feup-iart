@@ -1,3 +1,5 @@
+package logic;
+
 import java.awt.geom.Point2D;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -8,11 +10,14 @@ import java.util.Random;
 
 public class Population
 {
-    final static int ELITISM_K = 5;
-    final static int POP_SIZE = 200 + ELITISM_K;  // population size
-    final static int MAX_ITER = 2000;             // max number of iterations
-    final static double MUTATION_RATE = 0.1;     // probability of mutation
-    final static double CROSSOVER_RATE = 0.8;     // probability of crossover
+    private static int ELITISM_K = 5;
+    private static int POP_SIZE = 200 + ELITISM_K;  // population size
+    private static int MAX_ITER = 2000;             // max number of iterations
+    private static double MUTATION_RATE = 0.1;     // probability of mutation
+    private static double CROSSOVER_RATE = 0.8;     // probability of crossover
+
+    private static boolean ITER_END = true;
+    private static boolean TIME_END = false;
 
     private static Random m_rand = new Random();  // random-number generator
     private Individual[] m_population;
@@ -21,11 +26,27 @@ public class Population
     private ArrayList<Book> books;
     private ArrayList<Point2D.Double> shelves;
 
-    public Population(String booksFilename, ArrayList<Point2D.Double> shelves) {
+    public Population() {
+    }
+
+    public static void setAlgorithmParameters(int elitismK, int popSize, int maxIter,
+                                              double mutationRate, double crossoverRate,
+                                              boolean iterEnd, boolean timeEnd) {
+        Population.ELITISM_K = elitismK;
+        Population.POP_SIZE = popSize + elitismK;
+        Population.MAX_ITER = maxIter;
+        Population.MUTATION_RATE = mutationRate;
+        Population.CROSSOVER_RATE = crossoverRate;
+
+        Population.ITER_END = iterEnd;
+        Population.TIME_END = timeEnd;
+    }
+
+    public void initiatePopulation(String booksFilename, String shelvesFilename) {
 
         this.books = parseBooks(booksFilename);
         Individual.setBooks(this.books);
-        this.shelves = shelves;
+        this.shelves = parseShelves(shelvesFilename);
         Individual.setShelves(this.shelves);
 
         m_population = new Individual[POP_SIZE];
@@ -38,6 +59,40 @@ public class Population
 
         // evaluate current population
         this.evaluate();
+    }
+
+    public ArrayList<Point2D.Double> parseShelves(String filename) {
+        BufferedReader br = null;
+        String line = "";
+        String splitCharacter = ";";
+
+        ArrayList<Point2D.Double> shelves = new ArrayList<>();
+
+        try {
+            br = new BufferedReader(new FileReader(filename));
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(splitCharacter);
+                if(parts.length != 2){
+                    System.out.println("Invalid number of arguments for shelf on line: " + line);
+                    continue;
+                }
+                double width = Double.parseDouble(parts[0]);
+                double height = Double.parseDouble(parts[1]);
+                shelves.add(new Point2D.Double(width, height));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return shelves;
     }
 
     public ArrayList<Book> parseBooks(String filename) {
@@ -164,21 +219,14 @@ public class Population
         return newIndiv;
     }
 
-
-    // 211 total length, max height = 26
-    public static void main(String[] args) {
-
-        Point2D.Double shelf = new Point2D.Double(50, 30);
-        ArrayList<Point2D.Double> shelves = new ArrayList<>();
-        for(int i = 0; i < 5; i++) shelves.add(shelf);
-        Population pop = new Population("sample1.csv", shelves);
+    public void evolve() {
         Individual[] newPop = new Individual[POP_SIZE];
         Individual[] indiv = new Individual[2];
 
         // current population
-        System.out.print("Total Fitness = " + pop.totalFitness);
+        System.out.print("Total Fitness = " + totalFitness);
         System.out.println(" ; Best Fitness = " +
-                pop.findBestIndividual().getFitnessValue());
+                findBestIndividual().getFitnessValue());
 
         // main loop
         int count;
@@ -187,19 +235,19 @@ public class Population
 
             // Elitism
             for (int i=0; i<ELITISM_K; ++i) {
-                newPop[count] = pop.findBestIndividual();
+                newPop[count] = findBestIndividual();
                 count++;
             }
 
-            // build new Population
+            // build new logic.Population
             while (count < POP_SIZE) {
                 // Selection
-                indiv[0] = pop.rouletteWheelSelection();
-                indiv[1] = pop.rouletteWheelSelection();
+                indiv[0] = rouletteWheelSelection();
+                indiv[1] = rouletteWheelSelection();
 
                 // Crossover
                 if ( m_rand.nextDouble() < CROSSOVER_RATE ) {
-                    indiv = pop.crossover(indiv[0], indiv[1]);
+                    indiv = crossover(indiv[0], indiv[1]);
                 }
 
 //                // Mutation
@@ -215,18 +263,84 @@ public class Population
                 newPop[count+1] = indiv[1];
                 count += 2;
             }
-            pop.setPopulation(newPop);
+            setPopulation(newPop);
 
             // reevaluate current population
-            pop.evaluate();
-            System.out.print("Total Fitness = " + pop.totalFitness);
+            evaluate();
+            System.out.print("Total Fitness = " + totalFitness);
             System.out.println(" ; Best Fitness = " +
-                    pop.findBestIndividual().getFitnessValue());
+                    findBestIndividual().getFitnessValue());
         }
 
         // best indiv
-        Individual bestIndiv = pop.findBestIndividual();
+        Individual bestIndiv = findBestIndividual();
         System.out.println(bestIndiv);
-
+        System.out.println(bestIndiv.analyze());
     }
+
+
+    // 211 total length, max height = 26
+//    public static void main(String[] args) {
+//
+//        Point2D.Double shelf = new Point2D.Double(50, 30);
+//        ArrayList<Point2D.Double> shelves = new ArrayList<>();
+//        for(int i = 0; i < 5; i++) shelves.add(shelf);
+//        logic.Population pop = new logic.Population("sample1.csv", shelves);
+//        logic.Individual[] newPop = new logic.Individual[POP_SIZE];
+//        logic.Individual[] indiv = new logic.Individual[2];
+//
+//        // current population
+//        System.out.print("Total Fitness = " + pop.totalFitness);
+//        System.out.println(" ; Best Fitness = " +
+//                pop.findBestIndividual().getFitnessValue());
+//
+//        // main loop
+//        int count;
+//        for (int iter = 0; iter < MAX_ITER; iter++) {
+//            count = 0;
+//
+//            // Elitism
+//            for (int i=0; i<ELITISM_K; ++i) {
+//                newPop[count] = pop.findBestIndividual();
+//                count++;
+//            }
+//
+//            // build new logic.Population
+//            while (count < POP_SIZE) {
+//                // Selection
+//                indiv[0] = pop.rouletteWheelSelection();
+//                indiv[1] = pop.rouletteWheelSelection();
+//
+//                // Crossover
+//                if ( m_rand.nextDouble() < CROSSOVER_RATE ) {
+//                    indiv = pop.crossover(indiv[0], indiv[1]);
+//                }
+//
+////                // Mutation
+//                if ( m_rand.nextDouble() < MUTATION_RATE ) {
+//                    indiv[0].mutate();
+//                }
+//                if ( m_rand.nextDouble() < MUTATION_RATE ) {
+//                    indiv[1].mutate();
+//                }
+//
+//                // add to new population
+//                newPop[count] = indiv[0];
+//                newPop[count+1] = indiv[1];
+//                count += 2;
+//            }
+//            pop.setPopulation(newPop);
+//
+//            // reevaluate current population
+//            pop.evaluate();
+//            System.out.print("Total Fitness = " + pop.totalFitness);
+//            System.out.println(" ; Best Fitness = " +
+//                    pop.findBestIndividual().getFitnessValue());
+//        }
+//
+//        // best indiv
+//        logic.Individual bestIndiv = pop.findBestIndividual();
+//        System.out.println(bestIndiv);
+//
+//    }
 }

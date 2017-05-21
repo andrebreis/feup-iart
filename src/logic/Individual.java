@@ -1,3 +1,5 @@
+package logic;
+
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Random;
@@ -149,14 +151,13 @@ public class Individual
             if(currentBook.getHeight() > nextBook.getHeight()*1.2 || currentBook.getHeight() < nextBook.getHeight() * 0.8)
                 noHeightPens++;
 
-            if(currentBook.getAuthor().equals(currentAuthor))
-                noBooksCurrentAuthor++;
-            else {
+            if(i == shelfBooks.size() - 2 || !currentBook.getAuthor().equals(currentAuthor)) {
                 if(!booksAreDateSorted(new ArrayList<>(shelfBooks.subList(i-noBooksCurrentAuthor, i))))
                     noDatePens++;
                 currentAuthor = currentBook.getAuthor();
                 noBooksCurrentAuthor = 1;
             }
+            else noBooksCurrentAuthor++;
 
             if(!hasCommonGenre(currentBook.getGenres(), nextBook.getGenres()))
                 noGenrePens++;
@@ -232,6 +233,65 @@ public class Individual
             else if (i != 0)
                 str += ", ";
             str += b;
+        }
+        return str;
+    }
+
+    private String analyzeShelf(ArrayList<Book> shelfBooks, Point2D.Double shelfDimensions) {
+        double totalBooksLength = 0;
+        int noAuthorPens = 0;
+        int noDatePens = 0;
+        int noHeightPens = 0;
+        int noGenrePens = 0;
+
+        String currentAuthor=shelfBooks.get(0).getAuthor();
+        int noBooksCurrentAuthor = 0;
+        for (int i = 0; i < shelfBooks.size() - 1; i++) {
+            Book currentBook = shelfBooks.get(i);
+            Book nextBook = shelfBooks.get(i+1);
+
+            totalBooksLength += currentBook.getLength();
+
+            if(!currentBook.getAuthor().equals(nextBook.getAuthor())) {
+                ArrayList<Book> nextElements = new ArrayList<>(shelfBooks.subList(i+2, shelfBooks.size()));
+                if(containsAuthor(nextElements, currentBook.getAuthor()))
+                    noAuthorPens++;
+            }
+
+            if(currentBook.getHeight() > nextBook.getHeight()*1.2 || currentBook.getHeight() < nextBook.getHeight() * 0.8)
+                noHeightPens++;
+
+            if(i == shelfBooks.size() - 2 || !currentBook.getAuthor().equals(currentAuthor)) {
+                System.out.println("Checking if books are date sorted...");
+                if(!booksAreDateSorted(new ArrayList<>(shelfBooks.subList(i-noBooksCurrentAuthor, i)))){
+                    noDatePens++;
+                    System.out.println("They arent!");
+                }
+                currentAuthor = currentBook.getAuthor();
+                noBooksCurrentAuthor = 1;
+            }
+            else noBooksCurrentAuthor++;
+
+            if(!hasCommonGenre(currentBook.getGenres(), nextBook.getGenres()))
+                noGenrePens++;
+        }
+        return String.format("Occupied Length / Total Length -> %f/%f\nAuthor Penalties: %d\nDate Penalties: %d\nHeight Penalties: %d\nGenre Penalties: %d\n",
+                totalBooksLength, shelfDimensions.x, noAuthorPens, noDatePens, noHeightPens, noGenrePens);
+    }
+
+    public String analyze() {
+        String str = "";
+        int currentBook = 0;
+        int currentShelf = 0;
+
+        ArrayList<Book> tmpBooks = new ArrayList<>(books);
+
+        while(currentBook != this.noBooks) {
+            str += "Shelf " + (currentShelf+1) + ": ";
+            ArrayList<Book> shelfBooks = getShelfBooks(currentShelf, currentBook, tmpBooks);
+            str += analyzeShelf(shelfBooks, shelves.get(currentShelf));
+            currentBook += shelfBooks.size();
+            currentShelf++;
         }
         return str;
     }
