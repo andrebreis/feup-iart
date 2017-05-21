@@ -306,4 +306,24 @@ public class Individual
         }
         return str;
     }
+
+    public static int getMaxNumPens() {
+        return MAX_NUM_PENS;
+    }
+
+    public static double getAuthorPenValue() {
+        return AUTHOR_PEN_VALUE;
+    }
+
+    public static double getDatePenValue() {
+        return DATE_PEN_VALUE;
+    }
+
+    public static double getHeightPenValue() {
+        return HEIGHT_PEN_VALUE;
+    }
+
+    public static double getGenrePenValue() {
+        return GENRE_PEN_VALUE;
+    }
 }

@@ -298,18 +298,20 @@
               <text value="Population size:"/>
             </properties>
           </component>
-          <component id="3e21b" class="javax.swing.JSlider" binding="slider1" default-binding="true">
+          <component id="3e21b" class="javax.swing.JSlider" binding="populationSize">
             <constraints>
               <grid row="4" column="2" row-span="2" col-span="15" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <majorTickSpacing value="200"/>
+              <majorTickSpacing value="100"/>
               <maximum value="1000"/>
-              <minimum value="100"/>
+              <minimum value="0"/>
               <minorTickSpacing value="50"/>
               <paintLabels value="true"/>
               <paintTicks value="true"/>
               <snapToTicks value="true"/>
+              <value value="200"/>
+              <valueIsAdjusting value="false"/>
             </properties>
           </component>
           <scrollpane id="b27b2">

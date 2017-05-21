@@ -48,6 +48,12 @@ public class PenaltiesWindow extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
+        maxNumPens.setText(String.valueOf(Individual.getMaxNumPens()));
+        authorPen.setValue((int) (Individual.getAuthorPenValue()*100));
+        datePen.setValue((int) (Individual.getDatePenValue()*100));
+        heightPen.setValue((int) (Individual.getHeightPenValue()*100));
+        genrePen.setValue((int) (Individual.getGenrePenValue()*100));
+
         this.pack();
         this.setModal(true);
     }

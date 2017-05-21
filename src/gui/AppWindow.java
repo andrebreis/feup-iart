@@ -23,7 +23,7 @@ public class AppWindow extends JDialog{
     private JTextField shelves_dataset;
     private JButton advancedSettingsButton;
     private JTabbedPane tabbedPane1;
-    private JSlider slider1;
+    private JSlider populationSize;
 
     private Population pop;
 
@@ -94,9 +94,13 @@ public class AppWindow extends JDialog{
 
     private void run() {
         // add your code here
+        if(!iterEnd.isSelected() && !timeEnd.isSelected()) {
+            JOptionPane.showMessageDialog(null, "At least one end condition must be enabled!");
+            return;
+        }
         pop = new Population();
 
-        Population.setAlgorithmParameters(elitism.getValue(), 200, num_iter.getValue(),
+        Population.setAlgorithmParameters(elitism.getValue(), populationSize.getValue(), num_iter.getValue(),
                 (double) mutation.getValue() / 100.0, (double) crossover.getValue() / 100.0,
                 iterEnd.isSelected(), timeEnd.isSelected());
 

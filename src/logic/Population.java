@@ -15,6 +15,7 @@ public class Population
     private static int MAX_ITER = 2000;             // max number of iterations
     private static double MUTATION_RATE = 0.1;     // probability of mutation
     private static double CROSSOVER_RATE = 0.8;     // probability of crossover
+    public static long DURATION = 5000;
 
     private static boolean ITER_END = true;
     private static boolean TIME_END = false;
@@ -219,6 +220,17 @@ public class Population
         return newIndiv;
     }
 
+    public boolean endCondition(int iteration, long startTime, long endTime) {
+        long duration = (endTime-startTime)/1000000;
+        if(TIME_END && ITER_END){
+            return iteration >= MAX_ITER || duration >= DURATION;
+        }
+        if(TIME_END)
+            return duration >= DURATION;
+        else
+            return iteration >= MAX_ITER;
+    }
+
     public void evolve() {
         Individual[] newPop = new Individual[POP_SIZE];
         Individual[] indiv = new Individual[2];
@@ -230,7 +242,11 @@ public class Population
 
         // main loop
         int count;
-        for (int iter = 0; iter < MAX_ITER; iter++) {
+//        for (int iter = 0; iter < MAX_ITER; iter++) {
+        int j = 0;
+        long startTime = System.nanoTime();
+        long endTime = System.nanoTime();
+        while (!endCondition(j, startTime, endTime)) {
             count = 0;
 
             // Elitism
@@ -270,6 +286,8 @@ public class Population
             System.out.print("Total Fitness = " + totalFitness);
             System.out.println(" ; Best Fitness = " +
                     findBestIndividual().getFitnessValue());
+            j++;
+            endTime = System.nanoTime();
         }
 
         // best indiv

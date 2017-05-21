@@ -7,8 +7,8 @@
     </constraints>
     <properties>
       <enabled value="false"/>
-      <maximumSize width="400" height="550"/>
-      <preferredSize width="500" height="550"/>
+      <maximumSize width="600" height="550"/>
+      <preferredSize width="550" height="550"/>
     </properties>
     <border type="none"/>
     <children>
@@ -184,7 +184,7 @@
               </grid>
             </constraints>
             <properties>
-              <text value=""/>
+              <text value="5"/>
             </properties>
           </component>
           <component id="85db4" class="javax.swing.JLabel">
